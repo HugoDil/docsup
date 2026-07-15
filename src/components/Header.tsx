@@ -16,6 +16,9 @@ export default function Header() {
           <Link href="/dictionnaire" className="transition-colors hover:text-lime-400">
             Dictionnaire
           </Link>
+          <Link href="/catalogue" className="transition-colors hover:text-lime-400">
+            Catalogue de prix
+          </Link>
         </nav>
       </div>
     </header>

@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSupplementBySlug, supplements } from "@/data/supplements";
+import { getPrixBySlug } from "@/data/prix";
 import { CategoryIcon, categoryStyles } from "@/components/CategoryIcon";
 import SupplementCard from "@/components/SupplementCard";
+import PriceTable from "@/components/PriceTable";
 import { categorieToSlug } from "@/lib/categorySlugs";
 
 export function generateStaticParams() {
@@ -33,6 +35,7 @@ export default async function SupplementPage({
   if (!supplement) notFound();
 
   const style = categoryStyles[supplement.categorie];
+  const catalogue = getPrixBySlug(supplement.slug);
   const similaires = supplements
     .filter((s) => s.categorie === supplement.categorie && s.slug !== supplement.slug)
     .slice(0, 3);
@@ -101,6 +104,12 @@ export default async function SupplementPage({
           </p>
         </div>
       </div>
+
+      {catalogue && (
+        <Section id="comparatif-prix" titre="Comparatif de prix" icone="💶">
+          <PriceTable catalogue={catalogue} />
+        </Section>
+      )}
 
       <Section titre="Bienfaits" icone="✅">
         <ul className="list-disc space-y-1 pl-5">
@@ -196,13 +205,15 @@ function Section({
   titre,
   icone,
   children,
+  id,
 }: {
   titre: string;
   icone: string;
   children: React.ReactNode;
+  id?: string;
 }) {
   return (
-    <section className="mt-8">
+    <section id={id} className="mt-8 scroll-mt-24">
       <h2 className="mb-3 flex items-center gap-2 text-lg font-black text-zinc-900 dark:text-zinc-50">
         <span aria-hidden="true">{icone}</span> {titre}
       </h2>
