@@ -1,18 +1,19 @@
-import Link from "next/link";
-import { cataloguePrix } from "@/data/prix";
-import { getSupplementBySlug } from "@/data/supplements";
-import { CategoryIcon, categoryStyles } from "@/components/CategoryIcon";
+import { cataloguePrix, type CataloguePrix } from "@/data/prix";
+import { getSupplementBySlug, type Supplement } from "@/data/supplements";
+import CatalogueGrid from "@/components/CatalogueGrid";
 
 export const metadata = {
   title: "Catalogue de prix — Docsup",
   description:
-    "Comparez les prix des compléments alimentaires les plus recherchés, du moins cher au plus cher, chez plusieurs marques et boutiques.",
+    "Comparez les prix des compléments alimentaires les plus recherchés, du moins cher au plus cher, chez plusieurs marques et boutiques locales à votre pays.",
 };
 
 export default function CataloguePage() {
-  const entries = cataloguePrix
-    .map((c) => ({ catalogue: c, supplement: getSupplementBySlug(c.slug) }))
-    .filter((e) => e.supplement);
+  const entries: { catalogue: CataloguePrix; supplement: Supplement }[] = [];
+  for (const catalogue of cataloguePrix) {
+    const supplement = getSupplementBySlug(catalogue.slug);
+    if (supplement) entries.push({ catalogue, supplement });
+  }
 
   return (
     <div>
@@ -26,54 +27,16 @@ export default function CataloguePage() {
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-zinc-400">
             Les compléments les plus recherchés, comparés entre plusieurs marques — du moins
-            cher au plus cher.
+            cher au plus cher, dans les boutiques de votre région (sélecteur en haut de page).
           </p>
         </div>
       </section>
 
       <section className="mx-auto max-w-5xl px-6 py-16">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {entries.map(({ catalogue, supplement }) => {
-            const s = supplement!;
-            const style = categoryStyles[s.categorie];
-            const moinsCher = Math.min(...catalogue.produits.map((p) => p.prix));
-            return (
-              <Link
-                key={s.slug}
-                href={`/dictionnaire/${s.slug}#comparatif-prix`}
-                className={`group flex flex-col rounded-lg border-2 border-transparent bg-white p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl ${style.border} ${style.glow} dark:bg-zinc-900`}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <span
-                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md ${style.solid} text-white`}
-                  >
-                    <CategoryIcon categorie={s.categorie} className="h-6 w-6" />
-                  </span>
-                  <span className="text-right">
-                    <span className="block text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                      À partir de
-                    </span>
-                    <span className="text-xl font-black text-zinc-900 dark:text-zinc-50">
-                      {moinsCher.toFixed(2)}€
-                    </span>
-                  </span>
-                </div>
-                <h3 className="mt-4 text-lg font-bold text-zinc-900 dark:text-zinc-50">
-                  {s.nom}
-                </h3>
-                <p className="mt-1.5 text-sm text-zinc-600 dark:text-zinc-400">
-                  {catalogue.produits.length} produits comparés
-                </p>
-                <span className={`mt-4 text-sm font-bold ${style.text}`}>
-                  Voir le comparatif →
-                </span>
-              </Link>
-            );
-          })}
-        </div>
+        <CatalogueGrid entries={entries} />
 
         <p className="mt-10 text-center text-sm text-zinc-500 dark:text-zinc-400">
-          D&apos;autres compléments seront ajoutés au catalogue progressivement.
+          D&apos;autres compléments et régions seront ajoutés au catalogue progressivement.
         </p>
       </section>
     </div>

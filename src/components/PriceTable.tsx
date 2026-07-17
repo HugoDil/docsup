@@ -1,8 +1,24 @@
+"use client";
+
 import type { CataloguePrix } from "@/data/prix";
+import { regions, useRegion } from "@/lib/region";
 
 export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) {
-  const produits = [...catalogue.produits].sort((a, b) => a.prix - b.prix);
+  const { region } = useRegion();
+  const infoRegion = regions.find((r) => r.code === region) ?? regions[0];
+  const produits = catalogue.produits
+    .filter((p) => p.region === region)
+    .sort((a, b) => a.prix - b.prix);
   const moinsCher = produits[0];
+
+  if (produits.length === 0) {
+    return (
+      <p className="rounded-lg border-2 border-zinc-200 bg-white p-4 text-sm text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+        Pas encore de prix relevés pour {infoRegion.label} pour ce complément. Essayez une autre
+        région dans le sélecteur en haut de la page.
+      </p>
+    );
+  }
 
   return (
     <div>
@@ -36,11 +52,13 @@ export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) 
                 <td className="px-4 py-3 text-right">
                   {p.prixBarre && (
                     <span className="mr-2 text-zinc-400 line-through">
-                      {p.prixBarre.toFixed(2)}€
+                      {p.prixBarre.toFixed(2)}
+                      {infoRegion.devise}
                     </span>
                   )}
                   <span className="font-black text-zinc-900 dark:text-zinc-50">
-                    {p.prix.toFixed(2)}€
+                    {p.prix.toFixed(2)}
+                    {infoRegion.devise}
                   </span>
                 </td>
               </tr>
@@ -49,8 +67,9 @@ export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) 
         </table>
       </div>
       <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
-        Prix relevés le {catalogue.dateReleve} chez les revendeurs indiqués, hors frais de port —
-        susceptibles d&apos;avoir changé depuis. Vérifiez le prix actuel avant achat.
+        Prix relevés le {catalogue.dateReleve} chez les revendeurs indiqués ({infoRegion.label}),
+        hors frais de port — susceptibles d&apos;avoir changé depuis. Vérifiez le prix actuel
+        avant achat.
       </p>
     </div>
   );
