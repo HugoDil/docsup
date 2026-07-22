@@ -17,8 +17,12 @@ export default function CataloguePage() {
 
   return (
     <div>
-      <section className="bg-zinc-950">
-        <div className="mx-auto max-w-5xl px-6 py-16 text-center">
+      <section className="relative overflow-hidden bg-zinc-950">
+        <div
+          aria-hidden="true"
+          className="absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-gradient-to-r from-lime-500/20 via-emerald-500/15 to-transparent blur-3xl"
+        />
+        <div className="relative mx-auto max-w-5xl px-6 py-16 text-center">
           <span className="inline-flex items-center gap-2 rounded-sm bg-lime-400 px-3 py-1 text-xs font-black uppercase tracking-wide text-zinc-950">
             {entries.length} compléments comparés
           </span>

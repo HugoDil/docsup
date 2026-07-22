@@ -123,13 +123,36 @@ export default async function SupplementPage({
         </div>
       </div>
 
+      {/* Navigation rapide */}
+      <nav className="mt-8 flex flex-wrap gap-2">
+        {catalogue && (
+          <a
+            href="#comparatif-prix"
+            className="rounded-sm bg-zinc-100 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+          >
+            💶 Prix
+          </a>
+        )}
+        <a href="#bienfaits" className="rounded-sm bg-zinc-100 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+          ✅ Bienfaits
+        </a>
+        <a href="#dosage" className="rounded-sm bg-zinc-100 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+          💊 Dosage
+        </a>
+        {supplement.mythes.length > 0 && (
+          <a href="#mythes" className="rounded-sm bg-zinc-100 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+            🚫 Mythes
+          </a>
+        )}
+      </nav>
+
       {catalogue && (
         <Section id="comparatif-prix" titre="Comparatif de prix" icone="💶">
           <PriceTable catalogue={catalogue} />
         </Section>
       )}
 
-      <Section titre="Bienfaits" icone="✅">
+      <Section id="bienfaits" titre="Bienfaits" icone="✅">
         <ul className="list-disc space-y-1 pl-5">
           {supplement.bienfaits.map((b) => (
             <li key={b}>{b}</li>
@@ -137,7 +160,7 @@ export default async function SupplementPage({
         </ul>
       </Section>
 
-      <Section titre="Signes de carence possibles" icone="⚠️">
+      <Section id="carence" titre="Signes de carence possibles" icone="⚠️">
         <ul className="list-disc space-y-1 pl-5">
           {supplement.signesDeCarence.map((s) => (
             <li key={s}>{s}</li>
@@ -145,7 +168,7 @@ export default async function SupplementPage({
         </ul>
       </Section>
 
-      <Section titre="Qui est le plus concerné ?" icone="👥">
+      <Section id="public" titre="Qui est le plus concerné ?" icone="👥">
         <ul className="list-disc space-y-1 pl-5">
           {supplement.publicConcerne.map((p) => (
             <li key={p}>{p}</li>
@@ -153,7 +176,7 @@ export default async function SupplementPage({
         </ul>
       </Section>
 
-      <Section titre="Dosage" icone="💊">
+      <Section id="dosage" titre="Dosage" icone="💊">
         <dl className="space-y-2">
           <div>
             <dt className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">
@@ -175,7 +198,7 @@ export default async function SupplementPage({
         </dl>
       </Section>
 
-      <Section titre="Sources alimentaires" icone="🥗">
+      <Section id="sources" titre="Sources alimentaires" icone="🥗">
         <ul className="list-disc space-y-1 pl-5">
           {supplement.sourcesAlimentaires.map((s) => (
             <li key={s}>{s}</li>
@@ -184,7 +207,7 @@ export default async function SupplementPage({
       </Section>
 
       {supplement.mythes.length > 0 && (
-        <Section titre="Mythes vs réalité" icone="🚫">
+        <Section id="mythes" titre="Mythes vs réalité" icone="🚫">
           <div className="space-y-4">
             {supplement.mythes.map((m) => (
               <div
