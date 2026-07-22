@@ -41,8 +41,25 @@ export default async function SupplementPage({
     .filter((s) => s.categorie === supplement.categorie && s.slug !== supplement.slug)
     .slice(0, 3);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "DietarySupplement",
+    name: supplement.nom,
+    alternateName: supplement.nomsAlternatifs,
+    description: supplement.description,
+    category: supplement.categorie,
+    recommendedIntake: supplement.dosage.recommande,
+    maximumIntake: supplement.dosage.maximum,
+    targetPopulation: supplement.publicConcerne.join(", "),
+    safetyConsideration: supplement.dosage.remarque,
+  };
+
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <nav className="flex flex-wrap items-center gap-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">
         <Link href="/dictionnaire" className="hover:text-zinc-900 dark:hover:text-white">
           Dictionnaire
