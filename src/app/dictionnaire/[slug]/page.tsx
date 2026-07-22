@@ -20,8 +20,9 @@ export async function generateMetadata({
   const supplement = getSupplementBySlug(slug);
   if (!supplement) return {};
   return {
-    title: `${supplement.nom} — Docsup`,
+    title: supplement.nom,
     description: supplement.resume,
+    openGraph: { title: supplement.nom, description: supplement.resume },
   };
 }
 

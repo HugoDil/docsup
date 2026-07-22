@@ -15,10 +15,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const description =
+  "Vitamines, minéraux et compléments alimentaires expliqués simplement : effets, mythes, dosages et carences, pour tout le monde.";
+
 export const metadata: Metadata = {
-  title: "Docsup — Le dictionnaire des compléments alimentaires",
-  description:
-    "Vitamines, minéraux et compléments alimentaires expliqués simplement : effets, mythes, dosages et carences, pour tout le monde.",
+  metadataBase: new URL("https://docsup-eight.vercel.app"),
+  title: {
+    default: "Docsup — Le dictionnaire des compléments alimentaires",
+    template: "%s — Docsup",
+  },
+  description,
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    siteName: "Docsup",
+    title: "Docsup — Le dictionnaire des compléments alimentaires",
+    description,
+  },
+  twitter: {
+    card: "summary",
+    title: "Docsup — Le dictionnaire des compléments alimentaires",
+    description,
+  },
 };
 
 export default function RootLayout({

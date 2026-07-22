@@ -3,7 +3,7 @@ import { getSupplementBySlug, type Supplement } from "@/data/supplements";
 import CatalogueGrid from "@/components/CatalogueGrid";
 
 export const metadata = {
-  title: "Catalogue de prix — Docsup",
+  title: "Catalogue de prix",
   description:
     "Comparez les prix des compléments alimentaires les plus recherchés, du moins cher au plus cher, chez plusieurs marques et boutiques locales à votre pays.",
 };
