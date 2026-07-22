@@ -44,7 +44,7 @@ export default function DictionnaireClient() {
         {supplements.length} compléments référencés — effets, dosages, carences et mythes.
       </p>
 
-      <div className="sticky top-[128px] z-10 -mx-6 mt-8 bg-zinc-50/95 px-6 py-4 backdrop-blur dark:bg-black/95 sm:top-[61px]">
+      <div className="sticky top-[131px] z-10 -mx-6 mt-8 bg-zinc-50/95 px-6 py-4 backdrop-blur dark:bg-black/95 sm:top-[61px]">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
             type="text"
