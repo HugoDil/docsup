@@ -51,10 +51,13 @@ export default function RootLayout({
       className={`${inter.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-[#0a0c10] font-sans text-zinc-100">
+        <div aria-hidden="true" className="noise-overlay pointer-events-none fixed inset-0 z-0" />
         <RegionProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <div className="relative z-10 flex min-h-full flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
         </RegionProvider>
       </body>
     </html>

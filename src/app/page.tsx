@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SupplementCard from "@/components/SupplementCard";
 import Faq from "@/components/Faq";
+import MoleculeArt from "@/components/MoleculeArt";
 import { CategoryIcon, categoryStyles } from "@/components/CategoryIcon";
 import { categories, supplements } from "@/data/supplements";
 import { categorieToSlug } from "@/lib/categorySlugs";
@@ -50,6 +51,7 @@ export default function Home() {
           aria-hidden="true"
           className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600/20 via-fuchsia-500/10 to-transparent blur-3xl"
         />
+        <MoleculeArt className="absolute inset-0 h-full w-full" />
         <div className="relative mx-auto max-w-5xl px-6 pb-20 pt-16 sm:pt-24">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="text-center lg:text-left">
