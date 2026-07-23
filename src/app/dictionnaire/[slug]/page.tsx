@@ -60,8 +60,8 @@ export default async function SupplementPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav className="flex flex-wrap items-center gap-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-        <Link href="/dictionnaire" className="hover:text-zinc-900 dark:hover:text-white">
+      <nav className="flex flex-wrap items-center gap-1.5 text-sm font-medium text-zinc-500">
+        <Link href="/dictionnaire" className="hover:text-zinc-200">
           Dictionnaire
         </Link>
         <span>›</span>
@@ -72,51 +72,47 @@ export default async function SupplementPage({
           {supplement.categorie}
         </Link>
         <span>›</span>
-        <span className="text-zinc-700 dark:text-zinc-300">{supplement.nom}</span>
+        <span className="text-zinc-300">{supplement.nom}</span>
       </nav>
 
       <div className="mt-5 flex items-start gap-4">
         <span
-          className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-md ${style.solid} text-white`}
+          className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${style.bg} ${style.text}`}
         >
           <CategoryIcon categorie={supplement.categorie} className="h-8 w-8" />
         </span>
         <div>
           <span
-            className={`inline-block w-fit rounded-sm px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide ${style.solid} text-white`}
+            className={`inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide ${style.bg} ${style.text}`}
           >
             {supplement.categorie}
           </span>
-          <h1 className="mt-1.5 text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
+          <h1 className="mt-1.5 font-serif text-4xl font-normal text-zinc-50">
             {supplement.nom}
           </h1>
           {supplement.nomsAlternatifs && supplement.nomsAlternatifs.length > 0 && (
-            <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-0.5 text-sm text-zinc-500">
               Aussi appelé : {supplement.nomsAlternatifs.join(", ")}
             </p>
           )}
         </div>
       </div>
 
-      <p className="mt-6 text-lg leading-relaxed text-zinc-700 dark:text-zinc-300">
-        {supplement.description}
-      </p>
+      <p className="mt-6 text-lg leading-relaxed text-zinc-300">{supplement.description}</p>
 
       {/* En bref */}
-      <div className={`mt-8 grid gap-4 rounded-lg border-2 bg-white p-6 dark:bg-zinc-900 sm:grid-cols-2 ${style.border.replace("hover:", "")}`}>
+      <div className={`glass-panel mt-8 grid gap-4 rounded-2xl p-6 sm:grid-cols-2 ${style.border}`}>
         <div>
-          <p className="text-xs font-black uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
             Dosage recommandé
           </p>
-          <p className="mt-1 font-bold text-zinc-900 dark:text-zinc-50">
-            {supplement.dosage.recommande}
-          </p>
+          <p className="mt-1 font-medium text-zinc-50">{supplement.dosage.recommande}</p>
         </div>
         <div>
-          <p className="text-xs font-black uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
             Qui est concerné
           </p>
-          <p className="mt-1 text-zinc-700 dark:text-zinc-300">
+          <p className="mt-1 text-zinc-300">
             {supplement.publicConcerne[0]}
             {supplement.publicConcerne.length > 1 ? ", ..." : ""}
           </p>
@@ -128,19 +124,28 @@ export default async function SupplementPage({
         {catalogue && (
           <a
             href="#comparatif-prix"
-            className="rounded-sm bg-zinc-100 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+            className="glass-panel rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-400 transition-colors hover:text-zinc-200"
           >
             💶 Prix
           </a>
         )}
-        <a href="#bienfaits" className="rounded-sm bg-zinc-100 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+        <a
+          href="#bienfaits"
+          className="glass-panel rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-400 transition-colors hover:text-zinc-200"
+        >
           ✅ Bienfaits
         </a>
-        <a href="#dosage" className="rounded-sm bg-zinc-100 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+        <a
+          href="#dosage"
+          className="glass-panel rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-400 transition-colors hover:text-zinc-200"
+        >
           💊 Dosage
         </a>
         {supplement.mythes.length > 0 && (
-          <a href="#mythes" className="rounded-sm bg-zinc-100 px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-700 transition-colors hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700">
+          <a
+            href="#mythes"
+            className="glass-panel rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-400 transition-colors hover:text-zinc-200"
+          >
             🚫 Mythes
           </a>
         )}
@@ -179,19 +184,15 @@ export default async function SupplementPage({
       <Section id="dosage" titre="Dosage" icone="💊">
         <dl className="space-y-2">
           <div>
-            <dt className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">
-              Recommandé
-            </dt>
+            <dt className="text-sm font-medium text-zinc-500">Recommandé</dt>
             <dd>{supplement.dosage.recommande}</dd>
           </div>
           <div>
-            <dt className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">
-              Maximum
-            </dt>
+            <dt className="text-sm font-medium text-zinc-500">Maximum</dt>
             <dd>{supplement.dosage.maximum}</dd>
           </div>
           {supplement.dosage.remarque && (
-            <p className="mt-2 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:bg-amber-900/20 dark:text-amber-200">
+            <p className="mt-2 rounded-xl bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
               {supplement.dosage.remarque}
             </p>
           )}
@@ -210,16 +211,9 @@ export default async function SupplementPage({
         <Section id="mythes" titre="Mythes vs réalité" icone="🚫">
           <div className="space-y-4">
             {supplement.mythes.map((m) => (
-              <div
-                key={m.affirmation}
-                className="rounded-lg border border-zinc-200 p-4 dark:border-zinc-800"
-              >
-                <p className="text-sm font-semibold text-red-700 dark:text-red-400">
-                  Mythe : {m.affirmation}
-                </p>
-                <p className="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
-                  Réalité : {m.realite}
-                </p>
+              <div key={m.affirmation} className="glass-panel rounded-xl p-4">
+                <p className="text-sm font-medium text-rose-300">Mythe : {m.affirmation}</p>
+                <p className="mt-1 text-sm text-zinc-300">Réalité : {m.realite}</p>
               </div>
             ))}
           </div>
@@ -227,8 +221,8 @@ export default async function SupplementPage({
       )}
 
       {similaires.length > 0 && (
-        <section className="mt-14 border-t-2 border-zinc-200 pt-8 dark:border-zinc-800">
-          <h2 className="mb-4 text-lg font-black text-zinc-900 dark:text-zinc-50">
+        <section className="mt-14 border-t border-white/[0.06] pt-8">
+          <h2 className="mb-4 font-serif text-xl text-zinc-50">
             À lire aussi dans « {supplement.categorie} »
           </h2>
           <div className="grid gap-5 sm:grid-cols-3">
@@ -255,10 +249,10 @@ function Section({
 }) {
   return (
     <section id={id} className="mt-8 scroll-mt-24">
-      <h2 className="mb-3 flex items-center gap-2 text-lg font-black text-zinc-900 dark:text-zinc-50">
+      <h2 className="mb-3 flex items-center gap-2 font-serif text-xl text-zinc-50">
         <span aria-hidden="true">{icone}</span> {titre}
       </h2>
-      <div className="leading-relaxed text-zinc-700 dark:text-zinc-300">{children}</div>
+      <div className="leading-relaxed text-zinc-300">{children}</div>
     </section>
   );
 }

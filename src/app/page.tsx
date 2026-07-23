@@ -44,21 +44,21 @@ export default function Home() {
 
   return (
     <div>
-      {/* Hero — dark bookend avec halo lumineux */}
-      <section className="relative overflow-hidden bg-zinc-950">
+      {/* Hero */}
+      <section className="relative overflow-hidden">
         <div
           aria-hidden="true"
-          className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-r from-lime-500/20 via-emerald-500/15 to-transparent blur-3xl"
+          className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600/20 via-fuchsia-500/10 to-transparent blur-3xl"
         />
         <div className="relative mx-auto max-w-5xl px-6 pb-20 pt-16 sm:pt-24">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="text-center lg:text-left">
-              <span className="inline-flex items-center gap-2 rounded-sm bg-lime-400 px-3 py-1 text-xs font-black uppercase tracking-wide text-zinc-950">
+              <span className="glass-panel inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-wide text-violet-300">
                 {supplements.length} compléments référencés
               </span>
-              <h1 className="mx-auto mt-6 max-w-xl text-5xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl lg:mx-0">
+              <h1 className="mx-auto mt-6 max-w-xl font-serif text-5xl font-normal leading-[1.1] text-zinc-50 sm:text-6xl lg:mx-0">
                 Comprendre les compléments alimentaires,{" "}
-                <span className="text-lime-400">sans jargon</span>
+                <span className="text-violet-400">sans jargon.</span>
               </h1>
               <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-zinc-400 lg:mx-0">
                 Docsup explique les effets, les mythes et les dosages des vitamines, minéraux et
@@ -68,40 +68,40 @@ export default function Home() {
               <div className="mt-9 flex justify-center gap-4 lg:justify-start">
                 <Link
                   href="/dictionnaire"
-                  className="rounded-sm bg-lime-400 px-7 py-3.5 text-sm font-black uppercase tracking-wide text-zinc-950 transition-colors hover:bg-lime-300"
+                  className="rounded-xl bg-violet-700 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-violet-600"
                 >
-                  Explorer le dictionnaire
+                  Explorer
                 </Link>
               </div>
             </div>
 
             {/* Carte flottante — aperçu */}
             <div className="hidden justify-self-center lg:block">
-              <div className="w-72 rotate-2 rounded-3xl bg-white p-5 shadow-[0_25px_50px_-12px_rgba(163,230,53,0.25)] transition-transform hover:rotate-0">
+              <div className="glass-panel w-72 rounded-2xl p-5">
                 <div className="flex items-center gap-3">
                   <span
-                    className={`flex h-11 w-11 items-center justify-center rounded-xl ${categoryStyles[magnesium.categorie].solid} text-white`}
+                    className={`flex h-11 w-11 items-center justify-center rounded-xl ${categoryStyles[magnesium.categorie].bg} ${categoryStyles[magnesium.categorie].text}`}
                   >
                     <CategoryIcon categorie={magnesium.categorie} className="h-6 w-6" />
                   </span>
                   <div>
-                    <p className="font-black text-zinc-900">{magnesium.nom}</p>
+                    <p className="font-serif text-lg text-zinc-50">{magnesium.nom}</p>
                     <p className="text-xs text-zinc-500">{magnesium.categorie}</p>
                   </div>
                 </div>
-                <div className="mt-4 rounded-xl bg-zinc-50 p-3">
-                  <p className="text-xs font-bold uppercase tracking-wide text-zinc-500">
+                <div className="mt-4 rounded-xl bg-white/[0.04] p-3">
+                  <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
                     Dosage recommandé
                   </p>
-                  <p className="mt-0.5 text-sm font-medium text-zinc-800">
+                  <p className="mt-0.5 text-sm font-medium text-zinc-200">
                     {magnesium.dosage.recommande}
                   </p>
                 </div>
-                <div className="mt-3 flex items-center justify-between rounded-xl bg-lime-50 p-3">
-                  <span className="text-xs font-black uppercase tracking-wide text-lime-700">
+                <div className="mt-3 flex items-center justify-between rounded-xl bg-violet-500/10 p-3">
+                  <span className="text-xs font-medium uppercase tracking-wide text-violet-300">
                     Moins cher
                   </span>
-                  <span className="font-black text-zinc-900">6,15€</span>
+                  <span className="font-serif text-lg text-zinc-50">6,15€</span>
                 </div>
               </div>
             </div>
@@ -109,8 +109,8 @@ export default function Home() {
         </div>
 
         {/* Stat strip */}
-        <div className="relative border-t border-white/10">
-          <div className="mx-auto grid max-w-5xl grid-cols-3 divide-x divide-white/10 px-6">
+        <div className="relative border-t border-white/[0.06]">
+          <div className="mx-auto grid max-w-5xl grid-cols-3 divide-x divide-white/[0.06] px-6">
             <Stat nombre={supplements.length} label="Compléments" />
             <Stat nombre={categories.length} label="Catégories" />
             <Stat nombre={100} suffixe="%" label="Gratuit" />
@@ -122,42 +122,45 @@ export default function Home() {
       <section className="mx-auto max-w-5xl px-6 py-20">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
-            <span className="text-xs font-black uppercase tracking-wide text-lime-600 dark:text-lime-400">
+            <span className="text-xs font-medium uppercase tracking-wide text-violet-400">
               Le problème
             </span>
-            <h2 className="mt-3 text-3xl font-black leading-tight tracking-tight text-zinc-900 dark:text-zinc-50">
+            <h2 className="mt-3 font-serif text-3xl font-normal leading-tight text-zinc-50">
               La plupart des sites sur les compléments vendent quelque chose.
             </h2>
           </div>
-          <p className="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
-            Classements sponsorisés, avis payés, dosages présentés pour flatter une marque plutôt
-            que pour informer... Docsup ne vend aucun complément. Le contenu explique ce que dit
-            la recherche, démonte les mythes marketing, et le comparateur de prix trie
-            uniquement du moins cher au plus cher — jamais de classement payé pour apparaître en
-            premier.
-          </p>
+          <div>
+            <p className="text-lg leading-relaxed text-zinc-400">
+              Classements sponsorisés, avis payés, dosages présentés pour flatter une marque
+              plutôt que pour informer... Docsup ne vend aucun complément. Le contenu explique ce
+              que dit la recherche, démonte les mythes marketing, et le comparateur de prix trie
+              uniquement du moins cher au plus cher — jamais de classement payé pour apparaître en
+              premier.
+            </p>
+            <span className="glass-panel mt-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-wide text-violet-300">
+              Indépendance · 0% sponsoring
+            </span>
+          </div>
         </div>
       </section>
 
       {/* Feature grid */}
       <section className="mx-auto max-w-5xl px-6 pb-20">
-        <h2 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
+        <h2 className="font-serif text-3xl font-normal text-zinc-50">
           Tout ce qu&apos;il faut, rien de plus.
         </h2>
-        <p className="mt-2 max-w-xl text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 max-w-xl text-zinc-400">
           Conçu pour rester simple à consulter — pas un jargon scientifique qui demande un
           diplôme pour le comprendre.
         </p>
         <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((f) => (
             <div key={f.titre} className="group">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-zinc-100 text-zinc-500 transition-all group-hover:bg-lime-400 group-hover:text-zinc-950 dark:bg-zinc-900 dark:text-zinc-400">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.04] text-zinc-400 transition-all group-hover:bg-violet-500/10 group-hover:text-violet-300">
                 <FeatureIcon nom={f.icone} className="h-6 w-6" />
               </span>
-              <h3 className="mt-4 font-black text-zinc-900 dark:text-zinc-50">{f.titre}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                {f.texte}
-              </p>
+              <h3 className="mt-4 font-serif text-xl text-zinc-50">{f.titre}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-zinc-400">{f.texte}</p>
             </div>
           ))}
         </div>
@@ -173,17 +176,15 @@ export default function Home() {
               <Link
                 key={c}
                 href={`/dictionnaire?categorie=${categorieToSlug[c]}`}
-                className="group flex flex-col items-center gap-2 rounded-lg border-2 border-transparent bg-white p-4 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl dark:bg-zinc-900"
+                className={`glass-panel group flex flex-col items-center gap-2 rounded-2xl p-4 text-center transition-all hover:-translate-y-1 hover:bg-white/[0.05] ${style.border}`}
               >
                 <span
-                  className={`flex h-12 w-12 items-center justify-center rounded-md ${style.solid} text-white transition-transform group-hover:scale-110`}
+                  className={`flex h-12 w-12 items-center justify-center rounded-xl ${style.bg} ${style.text} transition-transform group-hover:scale-110`}
                 >
                   <CategoryIcon categorie={c} className="h-7 w-7" />
                 </span>
-                <span className="text-sm font-bold text-zinc-900 dark:text-zinc-50">
-                  {c}
-                </span>
-                <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                <span className="text-sm font-medium text-zinc-50">{c}</span>
+                <span className="text-xs text-zinc-500">
                   {count} fiche{count > 1 ? "s" : ""}
                 </span>
               </Link>
@@ -195,13 +196,10 @@ export default function Home() {
       {/* Populaires */}
       <section className="mx-auto max-w-5xl px-6 pb-20">
         <div className="mb-6 flex items-end justify-between">
-          <h2 className="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
+          <h2 className="font-serif text-2xl font-normal text-zinc-50">
             Les plus consultées
           </h2>
-          <Link
-            href="/dictionnaire"
-            className="text-sm font-bold text-zinc-900 hover:text-lime-600 dark:text-zinc-50 dark:hover:text-lime-400"
-          >
+          <Link href="/dictionnaire" className="text-sm font-medium text-zinc-400 hover:text-violet-300">
             Tout voir →
           </Link>
         </div>
@@ -214,12 +212,10 @@ export default function Home() {
 
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-6 pb-20">
-        <h2 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">
+        <h2 className="font-serif text-3xl font-normal text-zinc-50">
           Questions fréquentes
         </h2>
-        <p className="mt-2 text-zinc-600 dark:text-zinc-400">
-          Tout ce qu&apos;il faut savoir avant de commencer.
-        </p>
+        <p className="mt-2 text-zinc-400">Tout ce qu&apos;il faut savoir avant de commencer.</p>
         <div className="mt-8">
           <Faq />
         </div>
@@ -227,8 +223,8 @@ export default function Home() {
 
       {/* CTA final */}
       <section className="mx-auto max-w-5xl px-6 pb-24">
-        <div className="rounded-lg bg-zinc-950 p-10 text-center sm:p-14">
-          <h2 className="text-3xl font-black tracking-tight text-white">
+        <div className="glass-panel rounded-2xl p-10 text-center sm:p-14">
+          <h2 className="font-serif text-3xl font-normal text-zinc-50">
             Prêt à comprendre vos compléments ?
           </h2>
           <p className="mx-auto mt-3 max-w-md text-zinc-400">
@@ -236,7 +232,7 @@ export default function Home() {
           </p>
           <Link
             href="/dictionnaire"
-            className="mt-7 inline-block rounded-sm bg-lime-400 px-7 py-3.5 text-sm font-black uppercase tracking-wide text-zinc-950 transition-colors hover:bg-lime-300"
+            className="mt-7 inline-block rounded-xl bg-violet-700 px-7 py-3.5 text-sm font-medium text-white transition-colors hover:bg-violet-600"
           >
             Explorer le dictionnaire
           </Link>
@@ -257,13 +253,11 @@ function Stat({
 }) {
   return (
     <div className="px-4 py-8 text-center first:pl-0 last:pr-0">
-      <p className="text-3xl font-black text-lime-400 sm:text-4xl">
+      <p className="font-serif text-3xl text-violet-400 sm:text-4xl">
         {nombre}
         {suffixe}
       </p>
-      <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-        {label}
-      </p>
+      <p className="mt-1 text-xs font-medium uppercase tracking-wide text-zinc-500">{label}</p>
     </div>
   );
 }

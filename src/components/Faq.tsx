@@ -29,7 +29,7 @@ export default function Faq() {
   const [ouvert, setOuvert] = useState<number | null>(0);
 
   return (
-    <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
+    <div className="divide-y divide-white/[0.06]">
       {questions.map((item, i) => {
         const estOuvert = ouvert === i;
         return (
@@ -39,9 +39,9 @@ export default function Faq() {
               className="flex w-full items-center justify-between gap-4 py-5 text-left"
               aria-expanded={estOuvert}
             >
-              <span className="font-bold text-zinc-900 dark:text-zinc-50">{item.q}</span>
+              <span className="font-serif text-lg text-zinc-50">{item.q}</span>
               <span
-                className={`shrink-0 text-2xl font-light text-lime-600 transition-transform dark:text-lime-400 ${
+                className={`shrink-0 text-2xl font-light text-violet-400 transition-transform ${
                   estOuvert ? "rotate-45" : ""
                 }`}
                 aria-hidden="true"
@@ -49,9 +49,7 @@ export default function Faq() {
                 +
               </span>
             </button>
-            {estOuvert && (
-              <p className="pb-5 leading-relaxed text-zinc-600 dark:text-zinc-400">{item.r}</p>
-            )}
+            {estOuvert && <p className="pb-5 leading-relaxed text-zinc-400">{item.r}</p>}
           </div>
         );
       })}

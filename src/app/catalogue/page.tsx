@@ -17,16 +17,16 @@ export default function CataloguePage() {
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-zinc-950">
+      <section className="relative overflow-hidden">
         <div
           aria-hidden="true"
-          className="absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-gradient-to-r from-lime-500/20 via-emerald-500/15 to-transparent blur-3xl"
+          className="absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600/20 via-fuchsia-500/10 to-transparent blur-3xl"
         />
         <div className="relative mx-auto max-w-5xl px-6 py-16 text-center">
-          <span className="inline-flex items-center gap-2 rounded-sm bg-lime-400 px-3 py-1 text-xs font-black uppercase tracking-wide text-zinc-950">
+          <span className="glass-panel inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium uppercase tracking-wide text-violet-300">
             {entries.length} compléments comparés
           </span>
-          <h1 className="mx-auto mt-6 max-w-2xl text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-5xl">
+          <h1 className="mx-auto mt-6 max-w-2xl font-serif text-4xl font-normal leading-[1.1] text-zinc-50 sm:text-5xl">
             Catalogue de prix
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-zinc-400">
@@ -39,7 +39,7 @@ export default function CataloguePage() {
       <section className="mx-auto max-w-5xl px-6 py-16">
         <CatalogueGrid entries={entries} />
 
-        <p className="mt-10 text-center text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="mt-10 text-center text-sm text-zinc-500">
           D&apos;autres compléments et régions seront ajoutés au catalogue progressivement.
         </p>
       </section>

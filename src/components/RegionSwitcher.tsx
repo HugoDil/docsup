@@ -11,7 +11,7 @@ export default function RegionSwitcher() {
       value={current.code}
       onChange={(e) => setRegion(e.target.value as typeof region)}
       aria-label="Choisir votre pays"
-      className="cursor-pointer rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs font-semibold text-zinc-300"
+      className="glass-panel cursor-pointer rounded-lg px-2 py-1 text-xs font-medium text-zinc-300"
     >
       {regions.map((r) => (
         <option key={r.code} value={r.code}>

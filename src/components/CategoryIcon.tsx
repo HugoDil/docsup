@@ -60,36 +60,36 @@ export function CategoryIcon({
 
 export const categoryStyles: Record<
   Categorie,
-  { solid: string; text: string; border: string; glow: string }
+  { text: string; bg: string; border: string; dot: string }
 > = {
   Vitamine: {
-    solid: "bg-amber-500",
-    text: "text-amber-600 dark:text-amber-400",
-    border: "hover:border-amber-500",
-    glow: "shadow-amber-500/25",
+    text: "text-violet-300",
+    bg: "bg-violet-500/10",
+    border: "border-violet-400/30",
+    dot: "bg-violet-400",
   },
   Minéral: {
-    solid: "bg-sky-500",
-    text: "text-sky-600 dark:text-sky-400",
-    border: "hover:border-sky-500",
-    glow: "shadow-sky-500/25",
+    text: "text-teal-300",
+    bg: "bg-teal-500/10",
+    border: "border-teal-400/30",
+    dot: "bg-teal-400",
   },
   "Acide gras": {
-    solid: "bg-cyan-500",
-    text: "text-cyan-600 dark:text-cyan-400",
-    border: "hover:border-cyan-500",
-    glow: "shadow-cyan-500/25",
+    text: "text-sky-300",
+    bg: "bg-sky-500/10",
+    border: "border-sky-400/30",
+    dot: "bg-sky-400",
   },
   "Plante & adaptogène": {
-    solid: "bg-emerald-500",
-    text: "text-emerald-600 dark:text-emerald-400",
-    border: "hover:border-emerald-500",
-    glow: "shadow-emerald-500/25",
+    text: "text-emerald-300",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-400/30",
+    dot: "bg-emerald-400",
   },
   Autre: {
-    solid: "bg-fuchsia-500",
-    text: "text-fuchsia-600 dark:text-fuchsia-400",
-    border: "hover:border-fuchsia-500",
-    glow: "shadow-fuchsia-500/25",
+    text: "text-amber-300",
+    bg: "bg-amber-500/10",
+    border: "border-amber-400/30",
+    dot: "bg-amber-400",
   },
 };

@@ -13,7 +13,7 @@ export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) 
 
   if (produits.length === 0) {
     return (
-      <p className="rounded-lg border-2 border-zinc-200 bg-white p-4 text-sm text-zinc-600 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+      <p className="glass-panel rounded-xl p-4 text-sm text-zinc-400">
         Pas encore de prix relevés pour {infoRegion.label} pour ce complément. Essayez une autre
         région dans le sélecteur en haut de la page.
       </p>
@@ -22,41 +22,38 @@ export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) 
 
   return (
     <div>
-      <div className="overflow-x-auto rounded-lg border-2 border-zinc-200 dark:border-zinc-800">
+      <div className="glass-panel overflow-x-auto rounded-2xl">
         <table className="w-full text-left text-sm">
-          <thead className="bg-zinc-950 text-white">
+          <thead className="border-b border-white/[0.06] text-zinc-400">
             <tr>
-              <th className="px-4 py-3 font-bold">Produit</th>
-              <th className="px-4 py-3 font-bold">Contenance</th>
-              <th className="px-4 py-3 font-bold">Boutique</th>
-              <th className="px-4 py-3 text-right font-bold">Prix</th>
+              <th className="px-4 py-3 font-medium">Produit</th>
+              <th className="px-4 py-3 font-medium">Contenance</th>
+              <th className="px-4 py-3 font-medium">Boutique</th>
+              <th className="px-4 py-3 text-right font-medium">Prix</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
+          <tbody className="divide-y divide-white/[0.06]">
             {produits.map((p) => (
-              <tr
-                key={`${p.marque}-${p.nom}`}
-                className={p === moinsCher ? "bg-lime-50 dark:bg-lime-400/10" : "bg-white dark:bg-zinc-900"}
-              >
+              <tr key={`${p.marque}-${p.nom}`} className={p === moinsCher ? "bg-violet-500/10" : ""}>
                 <td className="px-4 py-3">
-                  <span className="font-bold text-zinc-900 dark:text-zinc-50">{p.marque}</span>{" "}
-                  <span className="text-zinc-600 dark:text-zinc-400">{p.nom}</span>
+                  <span className="font-medium text-zinc-50">{p.marque}</span>{" "}
+                  <span className="text-zinc-400">{p.nom}</span>
                   {p === moinsCher && (
-                    <span className="ml-2 rounded-sm bg-lime-400 px-1.5 py-0.5 text-xs font-black uppercase text-zinc-950">
+                    <span className="ml-2 rounded-full bg-violet-700 px-1.5 py-0.5 text-xs font-medium uppercase text-white">
                       Moins cher
                     </span>
                   )}
                 </td>
-                <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">{p.contenance}</td>
-                <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">{p.boutique}</td>
+                <td className="px-4 py-3 text-zinc-400">{p.contenance}</td>
+                <td className="px-4 py-3 text-zinc-400">{p.boutique}</td>
                 <td className="px-4 py-3 text-right">
                   {p.prixBarre && (
-                    <span className="mr-2 text-zinc-400 line-through">
+                    <span className="mr-2 text-zinc-500 line-through">
                       {p.prixBarre.toFixed(2)}
                       {infoRegion.devise}
                     </span>
                   )}
-                  <span className="font-black text-zinc-900 dark:text-zinc-50">
+                  <span className="font-serif text-base text-zinc-50">
                     {p.prix.toFixed(2)}
                     {infoRegion.devise}
                   </span>
@@ -66,7 +63,7 @@ export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) 
           </tbody>
         </table>
       </div>
-      <p className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
+      <p className="mt-3 text-xs text-zinc-500">
         Prix relevés le {catalogue.dateReleve} chez les revendeurs indiqués ({infoRegion.label}),
         hors frais de port — susceptibles d&apos;avoir changé depuis. Vérifiez le prix actuel
         avant achat.

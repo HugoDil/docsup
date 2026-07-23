@@ -39,27 +39,27 @@ export default function DictionnaireClient() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
-      <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">Dictionnaire</h1>
-      <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+      <h1 className="font-serif text-4xl font-normal text-zinc-50">Dictionnaire</h1>
+      <p className="mt-2 text-zinc-400">
         {supplements.length} compléments référencés — effets, dosages, carences et mythes.
       </p>
 
-      <div className="sticky top-[131px] z-10 -mx-6 mt-8 bg-zinc-50/95 px-6 py-4 backdrop-blur dark:bg-black/95 sm:top-[61px]">
+      <div className="sticky top-[131px] z-10 -mx-6 mt-8 bg-[#0a0c10]/95 px-6 py-4 backdrop-blur-xl sm:top-[61px]">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Rechercher un complément (ex: magnésium, fer...)"
-            className="w-full rounded-md border-2 border-zinc-200 bg-white px-4 py-2 text-sm font-medium text-zinc-900 placeholder:text-zinc-400 placeholder:font-normal focus:border-lime-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 sm:max-w-sm"
+            className="glass-panel w-full rounded-xl px-4 py-2 text-sm font-medium text-zinc-50 placeholder:text-zinc-500 placeholder:font-normal focus:border-violet-400/40 focus:outline-none sm:max-w-sm"
           />
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setCategorie("Toutes")}
-              className={`rounded-sm px-3 py-1.5 text-xs font-bold uppercase tracking-wide transition-colors ${
+              className={`rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide transition-colors ${
                 categorie === "Toutes"
-                  ? "bg-zinc-950 text-lime-400 dark:bg-lime-400 dark:text-zinc-950"
-                  : "bg-zinc-200 text-zinc-700 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                  ? "bg-violet-700 text-white"
+                  : "glass-panel text-zinc-400 hover:text-zinc-200"
               }`}
             >
               Toutes
@@ -70,10 +70,10 @@ export default function DictionnaireClient() {
                 <button
                   key={c}
                   onClick={() => setCategorie(c)}
-                  className={`rounded-sm px-3 py-1.5 text-xs font-bold uppercase tracking-wide transition-colors ${
+                  className={`rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide transition-colors ${
                     categorie === c
-                      ? `${style.solid} text-white`
-                      : "bg-zinc-200 text-zinc-700 hover:bg-zinc-300 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                      ? `${style.bg} ${style.text}`
+                      : "glass-panel text-zinc-400 hover:text-zinc-200"
                   }`}
                 >
                   {c}
@@ -88,10 +88,10 @@ export default function DictionnaireClient() {
         <div className="mt-8 space-y-12">
           {groupes.map((g) => (
             <div key={g.categorie}>
-              <h2 className="mb-4 flex items-center gap-2 text-lg font-black text-zinc-900 dark:text-zinc-50">
-                <span className={`h-3 w-3 rounded-xs ${categoryStyles[g.categorie].solid}`} />
+              <h2 className="mb-4 flex items-center gap-2 font-serif text-xl text-zinc-50">
+                <span className={`h-2.5 w-2.5 rounded-full ${categoryStyles[g.categorie].dot}`} />
                 {g.categorie}
-                <span className="text-sm font-normal text-zinc-500 dark:text-zinc-400">
+                <span className="font-sans text-sm font-normal text-zinc-500">
                   ({g.items.length})
                 </span>
               </h2>
@@ -112,7 +112,7 @@ export default function DictionnaireClient() {
       )}
 
       {resultats.length === 0 && (
-        <p className="mt-12 text-center text-zinc-500 dark:text-zinc-400">
+        <p className="mt-12 text-center text-zinc-500">
           Aucun complément ne correspond à votre recherche.
         </p>
       )}
