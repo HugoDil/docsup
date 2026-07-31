@@ -28,4 +28,96 @@ body {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     opacity: 0.03;
   }
+
+  /* Atomes du hero : chaque groupe tourne sur son propre centre */
+  .molecule-spin-a,
+  .molecule-spin-b,
+  .molecule-spin-c,
+  .molecule-spin-d {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .molecule-spin-a {
+    animation: molecule-spin 34s linear infinite;
+  }
+  .molecule-spin-b {
+    animation: molecule-pulse 6s ease-in-out infinite;
+  }
+  .molecule-spin-c {
+    animation: molecule-spin-reverse 26s linear infinite;
+  }
+  .molecule-spin-d {
+    animation: molecule-spin 44s linear infinite;
+  }
+
+  .animate-core-glow {
+    animation: core-glow 6s ease-in-out infinite;
+  }
+  .animate-float-card {
+    animation: float-card 4.5s ease-in-out infinite;
+  }
+  .animate-twinkle {
+    animation: twinkle 3.4s ease-in-out infinite;
+  }
+}
+
+@keyframes molecule-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes molecule-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes molecule-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+@keyframes core-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    scale: 1;
+  }
+  50% {
+    opacity: 0.85;
+    scale: 1.08;
+  }
+}
+@keyframes float-card {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .molecule-spin-a,
+  .molecule-spin-b,
+  .molecule-spin-c,
+  .molecule-spin-d,
+  .animate-core-glow,
+  .animate-float-card,
+  .animate-twinkle {
+    animation: none !important;
+  }
 }
