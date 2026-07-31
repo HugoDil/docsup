@@ -59,6 +59,13 @@ body {
   .animate-twinkle {
     animation: twinkle 3.4s ease-in-out infinite;
   }
+
+  .header-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.7), transparent);
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    animation: header-shimmer 7s linear infinite;
+  }
 }
 
 @keyframes molecule-spin {
@@ -109,6 +116,14 @@ body {
     opacity: 0.65;
   }
 }
+@keyframes header-shimmer {
+  0% {
+    background-position: -60% 0;
+  }
+  100% {
+    background-position: 160% 0;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .molecule-spin-a,
@@ -117,7 +132,8 @@ body {
   .molecule-spin-d,
   .animate-core-glow,
   .animate-float-card,
-  .animate-twinkle {
+  .animate-twinkle,
+  .header-shimmer {
     animation: none !important;
   }
 }
