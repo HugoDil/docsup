@@ -2,7 +2,6 @@ import { cataloguePrix, type CataloguePrix } from "@/data/prix";
 import { getSupplementBySlug, type Supplement } from "@/data/supplements";
 import CatalogueGrid from "@/components/CatalogueGrid";
 import MoleculeArt from "@/components/MoleculeArt";
-import Starfield from "@/components/Starfield";
 
 export const metadata = {
   title: "Catalogue de prix",
@@ -20,7 +19,6 @@ export default function CataloguePage() {
   return (
     <div>
       <section className="relative overflow-hidden">
-        <Starfield />
         <div
           aria-hidden="true"
           className="animate-core-glow absolute left-1/2 top-0 h-[400px] w-[700px] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600/20 via-fuchsia-500/10 to-transparent blur-3xl"

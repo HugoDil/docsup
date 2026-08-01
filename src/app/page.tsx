@@ -2,7 +2,6 @@ import Link from "next/link";
 import SupplementCard from "@/components/SupplementCard";
 import Faq from "@/components/Faq";
 import MoleculeArt from "@/components/MoleculeArt";
-import Starfield from "@/components/Starfield";
 import { CategoryIcon, categoryStyles } from "@/components/CategoryIcon";
 import { categories, supplements } from "@/data/supplements";
 import { categorieToSlug } from "@/lib/categorySlugs";
@@ -48,7 +47,6 @@ export default function Home() {
     <div>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <Starfield />
         <div
           aria-hidden="true"
           className="animate-core-glow absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-gradient-to-r from-violet-600/20 via-fuchsia-500/10 to-transparent blur-3xl"

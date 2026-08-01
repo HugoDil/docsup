@@ -4,8 +4,7 @@ import Logo from "@/components/Logo";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-20 relative border-b border-white/[0.06] bg-[#0a0c10]/90 backdrop-blur-xl">
-      <div aria-hidden="true" className="header-shimmer pointer-events-none absolute inset-x-0 bottom-0 h-px" />
+    <header className="sticky top-0 z-20 border-b border-white/[0.06] bg-[#0a0c10]/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-4 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:gap-4">
         <Link href="/" className="justify-self-start">
           <Logo />
