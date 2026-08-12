@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { getSupplementBySlug, supplements } from "@/data/supplements";
 import { getPrixBySlug } from "@/data/prix";
 import PriceTable from "@/components/PriceTable";
+import { PrixFicheQuick } from "@/components/PrixInline";
 import { categorieToSlug } from "@/lib/categorySlugs";
-import { ficheGlyph } from "@/lib/ficheGlyph";
+import { ficheGlyph, splitAccent } from "@/lib/ficheGlyph";
 
 export function generateStaticParams() {
   return supplements.map((s) => ({ slug: s.slug }));
@@ -25,22 +26,6 @@ export async function generateMetadata({
   };
 }
 
-function splitNom(nom: string): { main: string; accent?: string } {
-  const idx = nom.lastIndexOf(" ");
-  if (idx === -1) return { main: nom };
-  const last = nom.slice(idx + 1);
-  if (last.length <= 3) return { main: nom.slice(0, idx), accent: last };
-  return { main: nom };
-}
-
-function prixMinFR(slug: string): number | null {
-  const catalogue = getPrixBySlug(slug);
-  if (!catalogue) return null;
-  const prixFR = catalogue.produits.filter((p) => p.region === "FR").map((p) => p.prix);
-  if (prixFR.length === 0) return null;
-  return Math.min(...prixFR);
-}
-
 export default async function SupplementPage({
   params,
 }: {
@@ -51,11 +36,10 @@ export default async function SupplementPage({
   if (!supplement) notFound();
 
   const catalogue = getPrixBySlug(supplement.slug);
-  const prixMin = prixMinFR(supplement.slug);
   const similaires = supplements
     .filter((s) => s.categorie === supplement.categorie && s.slug !== supplement.slug)
     .slice(0, 3);
-  const { main, accent } = splitNom(supplement.nom);
+  const { main, accent } = splitAccent(supplement.nom);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -73,10 +57,8 @@ export default async function SupplementPage({
   const quick = [
     { lbl: "Dose recommandée", val: supplement.dosage.recommande },
     { lbl: "Limite supérieure", val: supplement.dosage.maximum },
-    ...(prixMin !== null
-      ? [{ lbl: "À partir de", val: `${prixMin.toFixed(2)} €` }]
-      : []),
   ];
+  const quickCols = catalogue ? 3 : 2;
 
   const toc = [
     { id: "description", label: "01 · Description" },
@@ -117,13 +99,14 @@ export default async function SupplementPage({
             <div className="fiche-latin">{supplement.nomsAlternatifs.join(" · ")}</div>
           )}
           <p className="fiche-lede">{supplement.resume}</p>
-          <div className="fiche-quick" style={{ gridTemplateColumns: `repeat(${quick.length}, 1fr)` }}>
+          <div className="fiche-quick" style={{ gridTemplateColumns: `repeat(${quickCols}, 1fr)` }}>
             {quick.map((q) => (
               <div key={q.lbl}>
                 <div className="lbl">{q.lbl}</div>
                 <div className="val">{q.val}</div>
               </div>
             ))}
+            {catalogue && <PrixFicheQuick slug={supplement.slug} />}
           </div>
         </div>
         {catalogue && (
@@ -166,7 +149,7 @@ export default async function SupplementPage({
                 ))}
               </div>
               {supplement.signesDeCarence.length > 0 && (
-                <p style={{ marginTop: 16, fontSize: 13, color: "var(--muted)", lineHeight: 1.55 }}>
+                <p className="fiche-note">
                   Signes de carence possibles : {supplement.signesDeCarence.join(", ")}.
                 </p>
               )}
@@ -185,16 +168,14 @@ export default async function SupplementPage({
               </thead>
               <tbody>
                 <tr>
-                  <td>{supplement.publicConcerne[0] ?? "Population générale"}</td>
+                  <td>{supplement.publicConcerne.join(", ") || "Population générale"}</td>
                   <td className="big">{supplement.dosage.recommande}</td>
                   <td className="big">{supplement.dosage.maximum}</td>
                 </tr>
               </tbody>
             </table>
             {supplement.dosage.remarque && (
-              <p style={{ marginTop: 16, fontSize: 13, color: "var(--muted)", lineHeight: 1.55 }}>
-                Remarque — {supplement.dosage.remarque}
-              </p>
+              <p className="fiche-note">Remarque — {supplement.dosage.remarque}</p>
             )}
           </div>
 

@@ -15,14 +15,14 @@ export default function CatalogueGrid({
   const infoRegion = regions.find((r) => r.code === region) ?? regions[0];
 
   const disponibles = entries
-    .map((e, i) => ({
+    .map((e) => ({
       ...e,
-      idx: i + 1,
       produitsRegion: [...e.catalogue.produits]
         .filter((p) => p.region === region)
         .sort((a, b) => a.prix - b.prix),
     }))
-    .filter((e) => e.produitsRegion.length > 0);
+    .filter((e) => e.produitsRegion.length > 0)
+    .map((e, i) => ({ ...e, idx: i + 1 }));
 
   if (disponibles.length === 0) {
     return (

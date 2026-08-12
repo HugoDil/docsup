@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Faq from "@/components/Faq";
 import { categoryIndex } from "@/components/CategoryIcon";
+import { PrixBottle, PrixPopRow } from "@/components/PrixInline";
 import { categories, supplements } from "@/data/supplements";
-import { cataloguePrix, getPrixBySlug } from "@/data/prix";
+import { cataloguePrix } from "@/data/prix";
+import { regions } from "@/lib/regionsData";
 import { categorieToSlug } from "@/lib/categorySlugs";
 
 const principes = [
@@ -25,18 +27,11 @@ const principes = [
   },
 ];
 
-function prixMinFR(slug: string): number | null {
-  const catalogue = getPrixBySlug(slug);
-  if (!catalogue) return null;
-  const prixFR = catalogue.produits.filter((p) => p.region === "FR").map((p) => p.prix);
-  if (prixFR.length === 0) return null;
-  return Math.min(...prixFR);
-}
+const boutiques = new Set(cataloguePrix.flatMap((c) => c.produits.map((p) => p.boutique))).size;
 
 export default function Home() {
   const vedette = supplements.filter((s) => s.vedette);
   const phare = supplements.find((s) => s.slug === "vitamine-d") ?? vedette[0];
-  const prixPhare = phare ? prixMinFR(phare.slug) : null;
 
   return (
     <div>
@@ -44,8 +39,7 @@ export default function Home() {
       <section className="hero grain">
         <div className="hero-eyebrow">
           <span className="pip" aria-hidden="true" />
-          {supplements.length} fiches · {cataloguePrix.length > 0 ? "4 boutiques comparées" : ""} · sans lien
-          affilié
+          {supplements.length} fiches · {boutiques} boutiques comparées · sans lien affilié
         </div>
         <h1>
           Ce qu&apos;il faut <em>vraiment</em> savoir
@@ -75,8 +69,8 @@ export default function Home() {
             <div className="lbl">comparés en prix</div>
           </div>
           <div className="stat">
-            <div className="num">2</div>
-            <div className="lbl">pays · FR · QC</div>
+            <div className="num">{regions.length}</div>
+            <div className="lbl">pays · {regions.map((r) => r.code).join(" · ")}</div>
           </div>
           <div className="stat">
             <div className="num">
@@ -99,7 +93,7 @@ export default function Home() {
                     <div className="name">{phare.nom}</div>
                     <div className="dose">
                       {phare.dosage.recommande}
-                      {prixPhare !== null && ` · à partir de ${prixPhare.toFixed(2)} €`}
+                      <PrixBottle slug={phare.slug} />
                     </div>
                   </div>
                 </div>
@@ -177,33 +171,23 @@ export default function Home() {
           </p>
         </div>
         <div className="pop">
-          {vedette.map((s, i) => {
-            const prixMin = prixMinFR(s.slug);
-            return (
-              <Link key={s.slug} href={`/dictionnaire/${s.slug}`} className="pop-row">
-                <span className="r-idx">{String(i + 1).padStart(2, "0")}</span>
-                <div>
-                  <div className="r-name">
-                    {s.nom}
-                    <div className="sub">{s.resume}</div>
-                  </div>
+          {vedette.map((s, i) => (
+            <Link key={s.slug} href={`/dictionnaire/${s.slug}`} className="pop-row">
+              <span className="r-idx">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <div className="r-name">
+                  {s.nom}
+                  <div className="sub">{s.resume}</div>
                 </div>
-                <span className="r-tag">{s.categorie}</span>
-                <span className="r-dose">{s.dosage.recommande}</span>
-                <span className="r-price">
-                  {prixMin !== null ? (
-                    <>
-                      <span className="from">à partir de</span>
-                      {prixMin.toFixed(2)} €
-                    </>
-                  ) : (
-                    "—"
-                  )}
-                </span>
-                <span className="arrow">→</span>
-              </Link>
-            );
-          })}
+              </div>
+              <span className="r-tag">{s.categorie}</span>
+              <span className="r-dose">{s.dosage.recommande}</span>
+              <span className="r-price">
+                <PrixPopRow slug={s.slug} />
+              </span>
+              <span className="arrow">→</span>
+            </Link>
+          ))}
         </div>
       </section>
 

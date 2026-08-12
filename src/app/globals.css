@@ -46,6 +46,15 @@ a {
   color: inherit;
 }
 
+[id] {
+  scroll-margin-top: 96px;
+}
+@media (max-width: 640px) {
+  [id] {
+    scroll-margin-top: 168px;
+  }
+}
+
 @layer components {
   .display {
     font-family: var(--font-display), "Space Grotesk", sans-serif;
@@ -1185,6 +1194,12 @@ a {
     font: 500 11px var(--font-mono), monospace;
     color: var(--accent-2);
     margin-left: 6px;
+  }
+  .fiche-note {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
   }
 
   /* catalogue */
