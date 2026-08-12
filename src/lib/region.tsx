@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-export type Region = "FR" | "QC";
+export type Region = "FR" | "CA" | "US";
 
 export interface RegionInfo {
   code: Region;
@@ -13,7 +13,8 @@ export interface RegionInfo {
 
 export const regions: RegionInfo[] = [
   { code: "FR", label: "France", drapeau: "🇫🇷", devise: "€" },
-  { code: "QC", label: "Québec", drapeau: "🇨🇦", devise: "$" },
+  { code: "CA", label: "Canada", drapeau: "🇨🇦", devise: "CA$" },
+  { code: "US", label: "États-Unis", drapeau: "🇺🇸", devise: "US$" },
 ];
 
 const STORAGE_KEY = "docsup-region";
@@ -21,7 +22,8 @@ const STORAGE_KEY = "docsup-region";
 function deviner(): Region {
   if (typeof navigator === "undefined") return "FR";
   const langue = navigator.language?.toLowerCase() ?? "";
-  if (langue.includes("ca")) return "QC";
+  if (langue.endsWith("-ca") || langue === "ca") return "CA";
+  if (langue.endsWith("-us") || langue === "us") return "US";
   return "FR";
 }
 
