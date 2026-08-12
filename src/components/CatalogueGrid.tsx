@@ -3,8 +3,8 @@
 import Link from "next/link";
 import type { CataloguePrix } from "@/data/prix";
 import type { Supplement } from "@/data/supplements";
-import { CategoryIcon, categoryStyles } from "@/components/CategoryIcon";
 import { regions, useRegion } from "@/lib/region";
+import { categoryIndex } from "@/components/CategoryIcon";
 
 export default function CatalogueGrid({
   entries,
@@ -15,58 +15,66 @@ export default function CatalogueGrid({
   const infoRegion = regions.find((r) => r.code === region) ?? regions[0];
 
   const disponibles = entries
-    .map((e) => ({
+    .map((e, i) => ({
       ...e,
-      produitsRegion: e.catalogue.produits.filter((p) => p.region === region),
+      idx: i + 1,
+      produitsRegion: [...e.catalogue.produits]
+        .filter((p) => p.region === region)
+        .sort((a, b) => a.prix - b.prix),
     }))
     .filter((e) => e.produitsRegion.length > 0);
 
   if (disponibles.length === 0) {
     return (
-      <p className="glass-panel rounded-2xl p-6 text-center text-zinc-400">
+      <p style={{ textAlign: "center", color: "var(--muted)", padding: "48px 0" }}>
         Pas encore de prix relevés pour {infoRegion.label}. Choisissez une autre région dans le
-        menu en haut de la page.
+        sélecteur en haut de page.
       </p>
     );
   }
 
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {disponibles.map(({ catalogue, supplement, produitsRegion }) => {
-        const style = categoryStyles[supplement.categorie];
-        const moinsCher = Math.min(...produitsRegion.map((p) => p.prix));
-        return (
-          <Link
-            key={supplement.slug}
-            href={`/dictionnaire/${supplement.slug}#comparatif-prix`}
-            className={`glass-panel group flex flex-col rounded-2xl p-5 transition-all hover:-translate-y-1 hover:bg-white/[0.05] ${style.border}`}
-          >
-            <div className="flex items-start justify-between gap-3">
-              <span
-                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${style.bg} ${style.text}`}
-              >
-                <CategoryIcon categorie={supplement.categorie} className="h-6 w-6" />
-              </span>
-              <span className="text-right">
-                <span className="block text-xs font-medium uppercase tracking-wide text-zinc-500">
-                  À partir de
-                </span>
-                <span className="font-serif text-xl text-zinc-50">
-                  {moinsCher.toFixed(2)}
-                  {infoRegion.devise}
-                </span>
+    <div>
+      {disponibles.map(({ catalogue, supplement, idx, produitsRegion }) => (
+        <div key={supplement.slug} className="cat-card">
+          <div className="cat-card-head">
+            <div className="idx">{String(idx).padStart(2, "0")}</div>
+            <div className="name">
+              {supplement.nom}
+              <span className="sub">
+                {supplement.dosage.recommande} · {categoryIndex(supplement.categorie)} {supplement.categorie}
               </span>
             </div>
-            <h3 className="mt-4 font-serif text-lg text-zinc-50">{supplement.nom}</h3>
-            <p className="mt-1.5 text-sm text-zinc-400">
-              {produitsRegion.length} produits comparés · {infoRegion.label}
-            </p>
-            <span className={`mt-4 text-sm font-medium ${style.text}`}>
-              Voir le comparatif →
-            </span>
-          </Link>
-        );
-      })}
+            <div className="cheapest">
+              Le moins cher
+              <span className="p">
+                {produitsRegion[0].prix.toFixed(2)}
+                {infoRegion.devise}
+              </span>
+            </div>
+            <Link href={`/dictionnaire/${supplement.slug}`} style={{ color: "var(--muted)", textDecoration: "none" }}>
+              Fiche →
+            </Link>
+          </div>
+          <div className="cat-card-body">
+            {produitsRegion.slice(0, 4).map((p, i) => (
+              <div
+                key={`${p.boutique}-${p.marque}-${p.nom}-${p.contenance}-${i}`}
+                className={`shop-cell${i === 0 ? " best" : ""}`}
+              >
+                <div className="sname">{p.boutique}</div>
+                <div className="sform">
+                  {p.marque} · {p.contenance}
+                </div>
+                <div className="sprice">
+                  {p.prix.toFixed(2)}
+                  {infoRegion.devise}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }

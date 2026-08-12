@@ -13,15 +13,32 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #8b5cf6, #c026d3)",
+          background: "#2A3B2A",
           borderRadius: 7,
+          position: "relative",
         }}
       >
-        <svg viewBox="0 0 24 24" width={20} height={20} fill="none" stroke="white" strokeWidth={1.5}>
-          <ellipse cx="12" cy="12" rx="9" ry="3.8" transform="rotate(-24 12 12)" />
-          <ellipse cx="12" cy="12" rx="9" ry="3.8" transform="rotate(36 12 12)" />
-          <circle cx="12" cy="12" r="1.8" fill="white" stroke="none" />
-        </svg>
+        <div
+          style={{
+            position: "absolute",
+            width: 14,
+            height: 14,
+            border: "2px solid #FBF9F4",
+            borderRadius: "50%",
+            opacity: 0.85,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            width: 4,
+            height: 4,
+            background: "#FBF9F4",
+            borderRadius: "50%",
+            top: 9,
+            left: 15,
+          }}
+        />
       </div>
     ),
     size

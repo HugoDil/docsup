@@ -29,27 +29,22 @@ export default function Faq() {
   const [ouvert, setOuvert] = useState<number | null>(0);
 
   return (
-    <div className="divide-y divide-white/[0.06]">
+    <div className="faq-list">
       {questions.map((item, i) => {
         const estOuvert = ouvert === i;
         return (
-          <div key={item.q}>
+          <div key={item.q} className="faq-item">
             <button
               onClick={() => setOuvert(estOuvert ? null : i)}
-              className="flex w-full items-center justify-between gap-4 py-5 text-left"
+              className="faq-q"
               aria-expanded={estOuvert}
             >
-              <span className="font-serif text-lg text-zinc-50">{item.q}</span>
-              <span
-                className={`shrink-0 text-2xl font-light text-violet-400 transition-transform ${
-                  estOuvert ? "rotate-45" : ""
-                }`}
-                aria-hidden="true"
-              >
-                +
+              <h5>{item.q}</h5>
+              <span className="plus" aria-hidden="true" style={estOuvert ? { transform: "rotate(45deg)" } : undefined}>
+                ＋
               </span>
             </button>
-            {estOuvert && <p className="pb-5 leading-relaxed text-zinc-400">{item.r}</p>}
+            {estOuvert && <p className="faq-a">{item.r}</p>}
           </div>
         );
       })}

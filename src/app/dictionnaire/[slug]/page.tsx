@@ -2,10 +2,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSupplementBySlug, supplements } from "@/data/supplements";
 import { getPrixBySlug } from "@/data/prix";
-import { CategoryIcon, categoryStyles } from "@/components/CategoryIcon";
-import SupplementCard from "@/components/SupplementCard";
 import PriceTable from "@/components/PriceTable";
 import { categorieToSlug } from "@/lib/categorySlugs";
+import { ficheGlyph } from "@/lib/ficheGlyph";
 
 export function generateStaticParams() {
   return supplements.map((s) => ({ slug: s.slug }));
@@ -26,6 +25,22 @@ export async function generateMetadata({
   };
 }
 
+function splitNom(nom: string): { main: string; accent?: string } {
+  const idx = nom.lastIndexOf(" ");
+  if (idx === -1) return { main: nom };
+  const last = nom.slice(idx + 1);
+  if (last.length <= 3) return { main: nom.slice(0, idx), accent: last };
+  return { main: nom };
+}
+
+function prixMinFR(slug: string): number | null {
+  const catalogue = getPrixBySlug(slug);
+  if (!catalogue) return null;
+  const prixFR = catalogue.produits.filter((p) => p.region === "FR").map((p) => p.prix);
+  if (prixFR.length === 0) return null;
+  return Math.min(...prixFR);
+}
+
 export default async function SupplementPage({
   params,
 }: {
@@ -35,11 +50,12 @@ export default async function SupplementPage({
   const supplement = getSupplementBySlug(slug);
   if (!supplement) notFound();
 
-  const style = categoryStyles[supplement.categorie];
   const catalogue = getPrixBySlug(supplement.slug);
+  const prixMin = prixMinFR(supplement.slug);
   const similaires = supplements
     .filter((s) => s.categorie === supplement.categorie && s.slug !== supplement.slug)
     .slice(0, 3);
+  const { main, accent } = splitNom(supplement.nom);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -54,205 +70,195 @@ export default async function SupplementPage({
     safetyConsideration: supplement.dosage.remarque,
   };
 
+  const quick = [
+    { lbl: "Dose recommandée", val: supplement.dosage.recommande },
+    { lbl: "Limite supérieure", val: supplement.dosage.maximum },
+    ...(prixMin !== null
+      ? [{ lbl: "À partir de", val: `${prixMin.toFixed(2)} €` }]
+      : []),
+  ];
+
+  const toc = [
+    { id: "description", label: "01 · Description" },
+    ...(supplement.bienfaits.length > 0 ? [{ id: "bienfaits", label: "02 · Bienfaits" }] : []),
+    { id: "dosage", label: "03 · Dosage" },
+    ...(supplement.sourcesAlimentaires.length > 0
+      ? [{ id: "sources", label: "04 · Sources alimentaires" }]
+      : []),
+    ...(supplement.mythes.length > 0 ? [{ id: "mythes", label: "05 · Mythes" }] : []),
+    ...(similaires.length > 0 ? [{ id: "similaires", label: "06 · Similaires" }] : []),
+  ];
+
   return (
-    <div className="mx-auto max-w-3xl px-6 py-12">
+    <div className="fiche">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <nav className="flex flex-wrap items-center gap-1.5 text-sm font-medium text-zinc-500">
-        <Link href="/dictionnaire" className="hover:text-zinc-200">
-          Dictionnaire
-        </Link>
-        <span>›</span>
-        <Link
-          href={`/dictionnaire?categorie=${categorieToSlug[supplement.categorie]}`}
-          className={`hover:underline ${style.text}`}
-        >
-          {supplement.categorie}
-        </Link>
-        <span>›</span>
-        <span className="text-zinc-300">{supplement.nom}</span>
-      </nav>
 
-      <div className="mt-5 flex items-start gap-4">
-        <span
-          className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${style.bg} ${style.text}`}
-        >
-          <CategoryIcon categorie={supplement.categorie} className="h-8 w-8" />
-        </span>
+      <div className="fiche-hero grain" style={!catalogue ? { gridTemplateColumns: "1fr" } : undefined}>
         <div>
-          <span
-            className={`inline-block w-fit rounded-full px-2.5 py-0.5 text-xs font-medium uppercase tracking-wide ${style.bg} ${style.text}`}
-          >
-            {supplement.categorie}
-          </span>
-          <h1 className="mt-1.5 font-serif text-4xl font-normal text-zinc-50">
-            {supplement.nom}
+          <nav className="fiche-breadcrumb">
+            <Link href="/dictionnaire">Dictionnaire</Link>
+            <span className="sep">/</span>
+            <Link href={`/dictionnaire?categorie=${categorieToSlug[supplement.categorie]}`}>
+              {supplement.categorie}
+            </Link>
+            <span className="sep">/</span>
+            <span style={{ color: "var(--ink)" }}>{supplement.nom}</span>
+          </nav>
+          <div className="section-eyebrow">
+            {ficheGlyph(supplement.nom)} · {supplement.categorie}
+          </div>
+          <h1 className="fiche-name">
+            {main} {accent && <em>{accent}</em>}
           </h1>
           {supplement.nomsAlternatifs && supplement.nomsAlternatifs.length > 0 && (
-            <p className="mt-0.5 text-sm text-zinc-500">
-              Aussi appelé : {supplement.nomsAlternatifs.join(", ")}
-            </p>
+            <div className="fiche-latin">{supplement.nomsAlternatifs.join(" · ")}</div>
           )}
-        </div>
-      </div>
-
-      <p className="mt-6 text-lg leading-relaxed text-zinc-300">{supplement.description}</p>
-
-      {/* En bref */}
-      <div className={`glass-panel mt-8 grid gap-4 rounded-2xl p-6 sm:grid-cols-2 ${style.border}`}>
-        <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-            Dosage recommandé
-          </p>
-          <p className="mt-1 font-medium text-zinc-50">{supplement.dosage.recommande}</p>
-        </div>
-        <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
-            Qui est concerné
-          </p>
-          <p className="mt-1 text-zinc-300">
-            {supplement.publicConcerne[0]}
-            {supplement.publicConcerne.length > 1 ? ", ..." : ""}
-          </p>
-        </div>
-      </div>
-
-      {/* Navigation rapide */}
-      <nav className="mt-8 flex flex-wrap gap-2">
-        {catalogue && (
-          <a
-            href="#comparatif-prix"
-            className="glass-panel rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-400 transition-colors hover:text-zinc-200"
-          >
-            💶 Prix
-          </a>
-        )}
-        <a
-          href="#bienfaits"
-          className="glass-panel rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-400 transition-colors hover:text-zinc-200"
-        >
-          ✅ Bienfaits
-        </a>
-        <a
-          href="#dosage"
-          className="glass-panel rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-400 transition-colors hover:text-zinc-200"
-        >
-          💊 Dosage
-        </a>
-        {supplement.mythes.length > 0 && (
-          <a
-            href="#mythes"
-            className="glass-panel rounded-full px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-400 transition-colors hover:text-zinc-200"
-          >
-            🚫 Mythes
-          </a>
-        )}
-      </nav>
-
-      {catalogue && (
-        <Section id="comparatif-prix" titre="Comparatif de prix" icone="💶">
-          <PriceTable catalogue={catalogue} />
-        </Section>
-      )}
-
-      <Section id="bienfaits" titre="Bienfaits" icone="✅">
-        <ul className="list-disc space-y-1 pl-5">
-          {supplement.bienfaits.map((b) => (
-            <li key={b}>{b}</li>
-          ))}
-        </ul>
-      </Section>
-
-      <Section id="carence" titre="Signes de carence possibles" icone="⚠️">
-        <ul className="list-disc space-y-1 pl-5">
-          {supplement.signesDeCarence.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-      </Section>
-
-      <Section id="public" titre="Qui est le plus concerné ?" icone="👥">
-        <ul className="list-disc space-y-1 pl-5">
-          {supplement.publicConcerne.map((p) => (
-            <li key={p}>{p}</li>
-          ))}
-        </ul>
-      </Section>
-
-      <Section id="dosage" titre="Dosage" icone="💊">
-        <dl className="space-y-2">
-          <div>
-            <dt className="text-sm font-medium text-zinc-500">Recommandé</dt>
-            <dd>{supplement.dosage.recommande}</dd>
-          </div>
-          <div>
-            <dt className="text-sm font-medium text-zinc-500">Maximum</dt>
-            <dd>{supplement.dosage.maximum}</dd>
-          </div>
-          {supplement.dosage.remarque && (
-            <p className="mt-2 rounded-xl bg-amber-500/10 px-4 py-3 text-sm text-amber-200">
-              {supplement.dosage.remarque}
-            </p>
-          )}
-        </dl>
-      </Section>
-
-      <Section id="sources" titre="Sources alimentaires" icone="🥗">
-        <ul className="list-disc space-y-1 pl-5">
-          {supplement.sourcesAlimentaires.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
-      </Section>
-
-      {supplement.mythes.length > 0 && (
-        <Section id="mythes" titre="Mythes vs réalité" icone="🚫">
-          <div className="space-y-4">
-            {supplement.mythes.map((m) => (
-              <div key={m.affirmation} className="glass-panel rounded-xl p-4">
-                <p className="text-sm font-medium text-rose-300">Mythe : {m.affirmation}</p>
-                <p className="mt-1 text-sm text-zinc-300">Réalité : {m.realite}</p>
+          <p className="fiche-lede">{supplement.resume}</p>
+          <div className="fiche-quick" style={{ gridTemplateColumns: `repeat(${quick.length}, 1fr)` }}>
+            {quick.map((q) => (
+              <div key={q.lbl}>
+                <div className="lbl">{q.lbl}</div>
+                <div className="val">{q.val}</div>
               </div>
             ))}
           </div>
-        </Section>
-      )}
+        </div>
+        {catalogue && (
+          <aside className="fiche-aside">
+            <PriceTable catalogue={catalogue} />
+          </aside>
+        )}
+      </div>
 
-      {similaires.length > 0 && (
-        <section className="mt-14 border-t border-white/[0.06] pt-8">
-          <h2 className="mb-4 font-serif text-xl text-zinc-50">
-            À lire aussi dans « {supplement.categorie} »
-          </h2>
-          <div className="grid gap-5 sm:grid-cols-3">
-            {similaires.map((s) => (
-              <SupplementCard key={s.slug} supplement={s} />
-            ))}
+      <div className="fiche-body">
+        <nav className="fiche-toc">
+          <h6>Sommaire</h6>
+          {toc.map((t) => (
+            <a key={t.id} href={`#${t.id}`}>
+              {t.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="fiche-content">
+          <div className="fiche-section" id="description">
+            <h3>01 — Description</h3>
+            <p>
+              <span className="drop">{supplement.description.charAt(0)}</span>
+              {supplement.description.slice(1)}
+            </p>
           </div>
-        </section>
-      )}
-    </div>
-  );
-}
 
-function Section({
-  titre,
-  icone,
-  children,
-  id,
-}: {
-  titre: string;
-  icone: string;
-  children: React.ReactNode;
-  id?: string;
-}) {
-  return (
-    <section id={id} className="mt-8 scroll-mt-24">
-      <h2 className="mb-3 flex items-center gap-2 font-serif text-xl text-zinc-50">
-        <span aria-hidden="true">{icone}</span> {titre}
-      </h2>
-      <div className="leading-relaxed text-zinc-300">{children}</div>
-    </section>
+          {supplement.bienfaits.length > 0 && (
+            <div className="fiche-section" id="bienfaits">
+              <h3>02 — Bienfaits documentés</h3>
+              <div className="benefits">
+                {supplement.bienfaits.map((b, i) => (
+                  <div key={b} className="benefit">
+                    <div className="idx">→ {String(i + 1).padStart(2, "0")}</div>
+                    <div>
+                      <h5>{b}</h5>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {supplement.signesDeCarence.length > 0 && (
+                <p style={{ marginTop: 16, fontSize: 13, color: "var(--muted)", lineHeight: 1.55 }}>
+                  Signes de carence possibles : {supplement.signesDeCarence.join(", ")}.
+                </p>
+              )}
+            </div>
+          )}
+
+          <div className="fiche-section" id="dosage">
+            <h3>03 — Dosage</h3>
+            <table className="dose-table">
+              <thead>
+                <tr>
+                  <th>Population</th>
+                  <th>Recommandé</th>
+                  <th>Limite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{supplement.publicConcerne[0] ?? "Population générale"}</td>
+                  <td className="big">{supplement.dosage.recommande}</td>
+                  <td className="big">{supplement.dosage.maximum}</td>
+                </tr>
+              </tbody>
+            </table>
+            {supplement.dosage.remarque && (
+              <p style={{ marginTop: 16, fontSize: 13, color: "var(--muted)", lineHeight: 1.55 }}>
+                Remarque — {supplement.dosage.remarque}
+              </p>
+            )}
+          </div>
+
+          {supplement.sourcesAlimentaires.length > 0 && (
+            <div className="fiche-section" id="sources">
+              <h3>04 — Sources alimentaires</h3>
+              <div className="food-sources">
+                {supplement.sourcesAlimentaires.map((s) => (
+                  <span key={s} className="food">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {supplement.mythes.length > 0 && (
+            <div className="fiche-section" id="mythes">
+              <h3>05 — Mythes</h3>
+              {supplement.mythes.map((m) => (
+                <div key={m.affirmation} className="myth">
+                  <p className="claim">{m.affirmation}</p>
+                  <span className="verdict">Faux</span>
+                  <p>{m.realite}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {similaires.length > 0 && (
+          <aside id="similaires">
+            <h6
+              style={{
+                font: "500 10px var(--font-mono), monospace",
+                textTransform: "uppercase",
+                letterSpacing: "0.12em",
+                color: "var(--muted)",
+                margin: "0 0 16px",
+              }}
+            >
+              À explorer aussi
+            </h6>
+            {similaires.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/dictionnaire/${s.slug}`}
+                style={{
+                  display: "block",
+                  padding: "16px 0",
+                  borderTop: "1px solid var(--line)",
+                  textDecoration: "none",
+                  color: "inherit",
+                }}
+              >
+                <div style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 500, letterSpacing: "-0.015em" }}>
+                  {s.nom}
+                </div>
+                <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 4 }}>{s.resume}</div>
+              </Link>
+            ))}
+          </aside>
+        )}
+      </div>
+    </div>
   );
 }
