@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Faq from "@/components/Faq";
-import { categoryIndex } from "@/components/CategoryIcon";
+import { categoryIndex } from "@/lib/categoryIndex";
 import { PrixBottle, PrixPopRow } from "@/components/PrixInline";
 import { categories, supplements } from "@/data/supplements";
 import { cataloguePrix } from "@/data/prix";

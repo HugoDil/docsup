@@ -5,9 +5,11 @@ import { usePathname } from "next/navigation";
 import RegionSwitcher from "@/components/RegionSwitcher";
 import Logo from "@/components/Logo";
 
-const navItems = [
-  { href: "/dictionnaire", label: "Dictionnaire" },
-  { href: "/catalogue", label: "Catalogue de prix" },
+type NavItem = { href: string; label: string; matchPath?: string };
+
+const navItems: NavItem[] = [
+  { href: "/dictionnaire", label: "Dictionnaire", matchPath: "/dictionnaire" },
+  { href: "/catalogue", label: "Catalogue de prix", matchPath: "/catalogue" },
   { href: "/#faq", label: "FAQ" },
 ];
 
@@ -20,15 +22,14 @@ export default function Header() {
         <Logo />
       </Link>
       <nav className="nav">
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={pathname.startsWith(item.href.split("#")[0]) && item.href !== "/#faq" ? "active" : ""}
-          >
-            {item.label}
-          </Link>
-        ))}
+        {navItems.map((item) => {
+          const active = item.matchPath !== undefined && pathname.startsWith(item.matchPath);
+          return (
+            <Link key={item.href} href={item.href} className={active ? "active" : ""}>
+              {item.label}
+            </Link>
+          );
+        })}
       </nav>
       <div className="hdr-right">
         <RegionSwitcher />

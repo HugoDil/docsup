@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { CataloguePrix } from "@/data/prix";
 import type { Supplement } from "@/data/supplements";
 import { regions, useRegion } from "@/lib/region";
-import { categoryIndex } from "@/components/CategoryIcon";
+import { categoryIndex } from "@/lib/categoryIndex";
 
 export default function CatalogueGrid({
   entries,
