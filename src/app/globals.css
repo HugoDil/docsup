@@ -42,16 +42,18 @@ body {
   font-feature-settings: "ss01", "cv11";
 }
 
-a {
-  color: inherit;
-}
+@layer base {
+  a {
+    color: inherit;
+  }
 
-[id] {
-  scroll-margin-top: 96px;
-}
-@media (max-width: 640px) {
   [id] {
-    scroll-margin-top: 168px;
+    scroll-margin-top: 96px;
+  }
+  @media (max-width: 640px) {
+    [id] {
+      scroll-margin-top: 168px;
+    }
   }
 }
 
