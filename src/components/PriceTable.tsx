@@ -2,6 +2,7 @@
 
 import type { CataloguePrix } from "@/data/prix";
 import { regions, useRegion } from "@/lib/region";
+import BoutiqueLink from "@/components/BoutiqueLink";
 
 export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) {
   const { region } = useRegion();
@@ -27,13 +28,16 @@ export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) 
     <div>
       <h6>Prix {infoRegion.label} · trié ↓</h6>
       {produits.map((p, i) => (
-        <div
+        <BoutiqueLink
           key={`${p.boutique}-${p.marque}-${p.nom}-${p.contenance}-${i}`}
+          boutique={p.boutique}
+          url={p.url}
           className={`price-row${p === moinsCher ? " best" : ""}`}
-          style={i === 0 ? { paddingTop: 0 } : undefined}
         >
           <div>
-            <div className="shop">{p.marque}</div>
+            <div className="shop">
+              {p.marque} <span style={{ color: "var(--muted)", fontWeight: 400 }}>· {p.boutique}</span>
+            </div>
             <div className="per">
               {p.nom} · {p.contenance}
             </div>
@@ -48,19 +52,10 @@ export default function PriceTable({ catalogue }: { catalogue: CataloguePrix }) 
             {p.prix.toFixed(2)}
             {infoRegion.devise}
           </div>
-        </div>
+        </BoutiqueLink>
       ))}
-      <p
-        style={{
-          font: "400 11px var(--font-mono), monospace",
-          color: "var(--muted)",
-          marginTop: 16,
-          paddingTop: 16,
-          borderTop: "1px solid var(--line-2)",
-          lineHeight: 1.5,
-        }}
-      >
-        Mis à jour le {catalogue.dateReleve} · sans lien affilié
+      <p className="fiche-note" style={{ paddingTop: 16, borderTop: "1px solid var(--line-2)" }}>
+        Mis à jour le {catalogue.dateReleve} · liens affiliés déclarés
       </p>
     </div>
   );

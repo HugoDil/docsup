@@ -9,12 +9,14 @@ import { categorieToSlug } from "@/lib/categorySlugs";
 
 const principes = [
   {
-    titre: "Zéro lien affilié",
-    texte: "Aucune boutique ne nous rémunère. Ni pour être listée, ni pour être classée en tête.",
+    titre: "Liens affiliés déclarés",
+    texte:
+      "Cliquer sur une boutique peut nous rémunérer via un programme d'affiliation — sans changer un centime du prix que vous payez. C'est notre seul revenu, c'est écrit noir sur blanc, ça n'influence jamais le classement.",
   },
   {
     titre: "Tri par prix, point.",
-    texte: "Le comparateur ordonne du moins cher au plus cher — jamais selon un accord commercial.",
+    texte:
+      "Le comparateur ordonne du moins cher au plus cher, point. Aucune boutique ne paie pour apparaître en tête, aucune ne peut acheter sa position. Un mieux-disant reste en tête même s'il ne nous verse rien.",
   },
   {
     titre: "Information et commerce séparés",
@@ -39,7 +41,7 @@ export default function Home() {
       <section className="hero grain">
         <div className="hero-eyebrow">
           <span className="pip" aria-hidden="true" />
-          {supplements.length} fiches · {boutiques} boutiques comparées · sans lien affilié
+          {supplements.length} fiches · {boutiques} boutiques comparées · indépendant, transparent
         </div>
         <h1>
           Ce qu&apos;il faut <em>vraiment</em> savoir
@@ -110,7 +112,7 @@ export default function Home() {
           <h2 className="headline">
             La quasi-totalité des sites sur les compléments <em>vendent</em> quelque chose.
             <br />
-            Nous, non.
+            Nous, on ne vend rien — on renvoie.
           </h2>
         </div>
         <div className="principles">
@@ -166,8 +168,8 @@ export default function Home() {
             </h3>
           </div>
           <p className="section-sub">
-            Une sélection de fiches parmi les plus complètes du dictionnaire. Aucun paiement pour
-            apparaître ici.
+            Une sélection de fiches parmi les plus complètes du dictionnaire. Aucun classement acheté :
+            la position est éditoriale, jamais commerciale.
           </p>
         </div>
         <div className="pop">

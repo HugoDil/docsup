@@ -4,8 +4,16 @@ import { useState } from "react";
 
 const questions = [
   {
-    q: "Est-ce que Docsup vend des compléments ?",
-    r: "Non. Docsup est un contenu éducatif indépendant. Le comparateur de prix renvoie vers des boutiques existantes, mais aucun complément n'est vendu directement sur le site, et aucun classement n'est payé pour apparaître en premier.",
+    q: "Comment Docsup gagne-t-il de l'argent ?",
+    r: "Uniquement via les liens affiliés vers les boutiques listées : si vous cliquez sur une boutique depuis le catalogue et que vous achetez, Docsup touche une petite commission sur cette vente — sans que ça change un centime pour vous. C'est notre seul revenu, il n'y a ni publicité, ni contenu sponsorisé, ni abonnement. Les liens concernés sont marqués rel=\"sponsored\" dans le code.",
+  },
+  {
+    q: "Est-ce que ça influence le classement du comparateur ?",
+    r: "Non. Le tri est algorithmique et strictement par prix croissant. Une boutique qui ne nous verse aucune commission peut apparaître en tête si elle est la moins chère — c'est régulièrement le cas. Aucune position n'est achetée, aucun bandeau \"sponsorisé\" n'existe.",
+  },
+  {
+    q: "Docsup vend-il des compléments directement ?",
+    r: "Non. Docsup ne vend rien. Le catalogue renvoie vers des boutiques existantes (Newpharma, iHerb, Vitamin Shoppe…) — c'est elles qui gèrent la vente, la livraison et le service client.",
   },
   {
     q: "Ces informations remplacent-elles un avis médical ?",
@@ -14,10 +22,6 @@ const questions = [
   {
     q: "D'où viennent les prix affichés ?",
     r: "Ils sont relevés manuellement chez plusieurs boutiques réelles, avec la date du relevé indiquée sur chaque fiche. Les prix changent : vérifiez toujours le prix actuel avant d'acheter.",
-  },
-  {
-    q: "Le site est-il vraiment gratuit ?",
-    r: "Oui, entièrement, sans compte ni inscription. Tout le dictionnaire et le comparateur de prix sont en accès libre.",
   },
   {
     q: "Un complément que je cherche n'est pas encore référencé ?",

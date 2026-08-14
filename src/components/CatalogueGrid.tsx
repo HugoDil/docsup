@@ -5,6 +5,7 @@ import type { CataloguePrix } from "@/data/prix";
 import type { Supplement } from "@/data/supplements";
 import { regions, useRegion } from "@/lib/region";
 import { categoryIndex } from "@/lib/categoryIndex";
+import BoutiqueLink from "@/components/BoutiqueLink";
 
 export default function CatalogueGrid({
   entries,
@@ -58,8 +59,10 @@ export default function CatalogueGrid({
           </div>
           <div className="cat-card-body">
             {produitsRegion.slice(0, 4).map((p, i) => (
-              <div
+              <BoutiqueLink
                 key={`${p.boutique}-${p.marque}-${p.nom}-${p.contenance}-${i}`}
+                boutique={p.boutique}
+                url={p.url}
                 className={`shop-cell${i === 0 ? " best" : ""}`}
               >
                 <div className="sname">{p.boutique}</div>
@@ -70,7 +73,7 @@ export default function CatalogueGrid({
                   {p.prix.toFixed(2)}
                   {infoRegion.devise}
                 </div>
-              </div>
+              </BoutiqueLink>
             ))}
           </div>
         </div>

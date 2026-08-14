@@ -13,7 +13,7 @@ export default function Footer() {
             Un dictionnaire indépendant des compléments alimentaires. Rien à vendre, <em>rien à cacher</em>.
           </p>
           <div className="badge-indep">
-            <span className="pip" aria-hidden="true" /> INDÉPENDANT · SANS AFFILIÉ
+            <span className="pip" aria-hidden="true" /> INDÉPENDANT · TRANSPARENT
           </div>
         </div>
         <div>

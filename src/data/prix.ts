@@ -1,4 +1,4 @@
-import type { Region } from "@/lib/region";
+import type { Region } from "@/lib/regionsData";
 
 export interface ProduitPrix {
   marque: string;
@@ -8,6 +8,12 @@ export interface ProduitPrix {
   prixBarre?: number;
   boutique: string;
   region: Region;
+  /**
+   * URL directe vers la page produit du revendeur. Optionnelle : si absente,
+   * le clic sur la boutique renvoie vers la homepage du revendeur (toujours
+   * wrappée avec le tag affilié quand disponible).
+   */
+  url?: string;
 }
 
 export interface CataloguePrix {
