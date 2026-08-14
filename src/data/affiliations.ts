@@ -47,7 +47,7 @@ function withParam(url: string, key: string, value: string | undefined): string 
  * un code d'un compte tiers.
  */
 const CODES = {
-  iherb: "", // ex. "ABC123" — utilisé pour rcode=…
+  iherb: "QAA2685", // utilisé pour rcode= (compte Hugo, couvre iherb.com et ca.iherb.com)
   newpharma: "", // ID Awin partenaire
   nutrimuscle: "", // ref= ou tracking Effiliation
   fitnessboutique: "",
