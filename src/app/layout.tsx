@@ -57,7 +57,7 @@ export default function RootLayout({
     >
       <head>
         {/* Vérification de propriété du site pour Impact.com (programme d'affiliation Vitamin Shoppe) */}
-        <meta name="impact-site-verification" {...{ value: "733a3c5b-2080-4dd7-8e07-1fd72f490049" }} />
+        <meta name="impact-site-verification" {...{ value: "8b3cf82d-9f4d-4f6a-8332-2aaf0de4a164" }} />
       </head>
       <body className="grain flex min-h-full flex-col bg-(--bg) font-sans text-(--ink)">
         <RegionProvider>

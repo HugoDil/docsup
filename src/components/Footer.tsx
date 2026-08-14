@@ -53,7 +53,7 @@ export default function Footer() {
       </div>
       <div className="footer-bot">
         <div>© {new Date().getFullYear()} Docsup — Ne remplace pas un avis médical. Prix à vérifier avant achat.</div>
-        <div>FR 🇫🇷 · QC 🇨🇦</div>
+        <div>FR 🇫🇷 · CA 🇨🇦 · US 🇺🇸</div>
       </div>
     </footer>
   );
