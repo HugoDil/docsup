@@ -25,7 +25,7 @@ const description =
   "Vitamines, minéraux et compléments alimentaires expliqués simplement : effets, mythes, dosages et carences, pour tout le monde.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://docsup-eight.vercel.app"),
+  metadataBase: new URL("https://docsup.org"),
   title: {
     default: "Docsup — Le dictionnaire des compléments alimentaires",
     template: "%s — Docsup",

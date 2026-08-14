@@ -4,7 +4,7 @@ Dictionnaire des compléments alimentaires : vitamines, minéraux, plantes et ad
 autres compléments courants, expliqués simplement (effets, dosages, carences, mythes vs
 réalité), avec un catalogue de prix comparant plusieurs marques par pays.
 
-Site en ligne : https://docsup-eight.vercel.app
+Site en ligne : https://docsup.org
 
 ## Stack
 
@@ -27,7 +27,10 @@ Chaque `git push` sur `main` redéploie automatiquement le site sur Vercel.
 ## Structure
 
 - `src/data/supplements.ts` — les fiches du dictionnaire (39+ compléments)
-- `src/data/prix.ts` — le catalogue de prix, par région (`FR` / `QC`)
+- `src/data/prix.ts` — le catalogue de prix, par région (`FR` / `CA` / `US`)
+- `src/data/affiliations.ts` — config des liens affiliés par boutique
 - `src/app/dictionnaire/` — pages liste et détail du dictionnaire
 - `src/app/catalogue/` — page catalogue de prix
-- `src/lib/region.tsx` — sélecteur de pays (France / Québec), persisté en local
+- `src/lib/regionsData.ts` — données des régions (France / Canada / États-Unis)
+- `src/lib/region.tsx` — contexte + sélecteur de région, persisté en local
+- `doc/AFFILIATIONS.md` — checklist des programmes d'affiliation à souscrire

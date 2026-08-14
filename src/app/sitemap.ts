@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { supplements } from "@/data/supplements";
 
-const SITE_URL = "https://docsup-eight.vercel.app";
+const SITE_URL = "https://docsup.org";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pagesStatiques: MetadataRoute.Sitemap = [
